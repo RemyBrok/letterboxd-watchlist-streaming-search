@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %} 
+<form method="POST" action="{{ url_for('process') }}"" autocomplete="off">
+    <input type="text" name="URL" value="https://letterboxd.com/Holymoose/watchlist/" />
+    <input type="submit" value="GO" />
+</form>
+
+{% endblock %}

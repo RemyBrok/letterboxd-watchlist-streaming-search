@@ -1,0 +1,14 @@
+version: "3.7"
+services:
+  stream-searcher:
+    build: 
+      context: ./
+      dockerfile: ./docker/Dockerfile
+    container_name: stream-searcher
+    ports:
+      - "9000:80"
+    volumes:
+      - ./online:/app
+    environment:
+      FLASK_ENV: "LOCAL"
+      FLASK_DEBUG: 1
