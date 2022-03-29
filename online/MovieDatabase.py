@@ -11,6 +11,8 @@ class TMDB:
     def getMovie(self, movie: str) -> dict:
         """Retrieves the right movie from The Movie Database"""
 
+        year = None
+
         # If there is a year at the end of the movie we chop it off and use it later for the response from TMDB
         if self.validYear(movie[-4:]):
             year = movie[-4:]
@@ -26,32 +28,42 @@ class TMDB:
         response = curl.get(url)
         results = response.json().get('results')
 
-        # If we only have 1 result we return that result
-        if len(results) == 1:
-            return results[0]
-
         # Loop through results if we have a year
         if year:
             for result in results:
-                # Same year so we go ahead and assume it's this release
+                # Same year: so we go ahead and assume it's this release
                 if result['release_date'][0:4] == year:
                     return result
+        elif len(results) > 0:
+            # If we don't have a year we get the first result and hope for the best
+            return results[0]
 
         # Nothing found
         return None
 
-    def getWatchProviders(self, movie: dict) :
+    def getWatchProviders(self, movie: dict, country = 'NL') :
         "Get watch providers. Provided by JustWatch.com"
+        
+        # Send request to MovieDatabase
+        response = curl.get(f"https://api.themoviedb.org/3/movie/{movie['id']}/watch/providers?api_key={config.TheMovieDatabase['apikey']}")
 
-        url = f"https://api.themoviedb.org/3/movie/{movie['id']}/watch/providers?api_key={config.TheMovieDatabase['apikey']}"
+        # Retrieve results
+        results = response.json().get('results')
 
-        response = curl.get(url)
+        # Check if country is in the results
+        if country in results:
+            # Check if there is a flatrate streaming service
+            if "flatrate" in results[country]:
+                return results[country]['flatrate']
 
-        return response.json().get('results')['NL']
+        return None
 
     def validYear(self, year) -> bool:
         """Checks if its a valid year"""
-        if int(year) >= 1888 and int(year) <= (self.today.year + 2):
-            return True
-        else:
+        try:
+            if int(year) >= 1888 and int(year) <= (self.today.year + 2):
+                return True
+            else:
+                return False
+        except:
             return False

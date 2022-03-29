@@ -2,8 +2,22 @@
 
 {% block content %} 
 <form method="POST" action="{{ url_for('process') }}"" autocomplete="off">
-    <input type="text" name="URL" value="https://letterboxd.com/Holymoose/watchlist/" />
+    <input type="text" name="URL" value="https://letterboxd.com/Holymoose/watchlist/">
     <input type="submit" value="GO" />
 </form>
+
+<br />
+
+{% for movie in movies %} 
+    {{ movie['name'] }}<br />
+    <ul>
+    {% for provider in movie['providers'] %}
+        <li>{{ provider['provider_name'] }}</li>
+    {% endfor %}
+    </ul>
+{% endfor %} 
+
+<br />
+
 
 {% endblock %}
