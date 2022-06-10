@@ -31,6 +31,9 @@ class TMDB:
         # Loop through results if we have a year
         if year:
             for result in results:
+                # If we have a year but no year in the result we gonna return none for now (NEED WIP)
+                if 'release_date' not in result:
+                    return None
                 # Same year: so we go ahead and assume it's this release
                 if result['release_date'][0:4] == year:
                     return result

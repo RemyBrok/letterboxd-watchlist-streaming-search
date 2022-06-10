@@ -1,17 +1,30 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Letterboxd streaming searcher</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
-    </head>
-    <body>
-        <div>
-            {% block content %}
-            {% endblock %}
-        </div>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <footer>
-            Made by Remy. Open source: <a href="https://github.com/RemyBrok/letterboxd-watchlist-streaming-search">GitHub</a>
-        </footer>
-    </body>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="{{ url_for('static', filename='js/bootstrap-select-country.js') }}"></script>
+
+    <title>Letterboxd streaming searcher</title>
+
+</head>
+<body>
+    {% block content %}
+    {% endblock %}
+
+    <section id="footer">
+        <div class="container-sm bg-dark">
+            <div class="row">
+                <div class="col p-2 text-light">
+                    Made by Remy. Open source: <a href="https://github.com/RemyBrok/letterboxd-watchlist-streaming-search" class="link-light" target="_blank">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+</body>
 </html>

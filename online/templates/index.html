@@ -1,23 +1,62 @@
 {% extends "base.html" %}
 
-{% block content %} 
-<form method="POST" action="{{ url_for('process') }}"" autocomplete="off">
-    <input type="text" name="URL" value="https://letterboxd.com/Holymoose/watchlist/">
-    <input type="submit" value="GO" />
-</form>
+{% block content %}
+<!-- Country selector and menu -->
+<section id="menu">
+    <div class="container-sm bg-primary">
+        <div class="row">
+            <div class="col text-end p-2">
+                <select name="country">
+                    <option value="NL">Netherland</option>
+                    <option value="BE">Belgium</option>
+                    <option value="LUX">Luxembourg</option>
+                </select>
+            </div> 
+         </div>
+    </div>
+</section>
 
-<br />
 
-{% for movie in movies %} 
-    {{ movie['name'] }}<br />
-    <ul>
-    {% for provider in movie['providers'] %}
-        <li>{{ provider['provider_name'] }}</li>
-    {% endfor %}
-    </ul>
-{% endfor %} 
+<!-- Form -->
+<section id="form">
+    <div class="container-sm bg-secondary">
+        <div class="row">
+            <div class="col p-2 text-center">
+                <p>
+                    Your letterboxd account:
+                </p>
+                <form method="POST" action="{{ url_for('process') }}"" autocomplete="off">
+                    <input type="text" name="URL" value="https://letterboxd.com/Holymoose/watchlist/">
+                    <input type="submit" value="GO" />
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
 
-<br />
+
+ <!-- Movies output -->
+
+<section id="movies">
+    <div class="container-sm bg-dark">
+        <div class="row text-light">
+            {% for movie in movies %} 
+                <div class="col">
+                    {{ movie['name'] }}
+                </div>
+            
+                <div class="col">
+                    <ul>
+                        {% for provider in movie['providers'] %}
+                            <li>{{ provider['provider_name'] }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="w-100"></div>
+            {% endfor %} 
+        </div>
+    </div>
+</section>
 
 
 {% endblock %}
