@@ -1,4 +1,4 @@
-"""Letterboxd Watchlist Streaming Searcher with Docker"""
+## Letterboxd watchlist streaming provider searcher
 
 Thanks to [JustWatch.com](https://www.justwatch.com/), [The Movie Database](https://www.themoviedb.org/) and [Letterboxd](https://letterboxd.com/).
 
