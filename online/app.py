@@ -1,12 +1,18 @@
 from flask import Flask, render_template, request
 
 from Controllers import MainController
+import json
 
 app = Flask(__name__)
 app.config.update(
     DEBUG=True,
     TEMPLATES_AUTO_RELOAD=True
 )
+
+@app.context_processor
+def availableCountries():
+    with open('data/countries.json', 'r') as file:        
+        return dict(countries=json.load(file))
 
 @app.route('/', methods=['GET'])
 def home():

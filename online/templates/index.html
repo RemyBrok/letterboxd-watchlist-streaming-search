@@ -2,19 +2,24 @@
 
 {% block content %}
 <!-- Country selector and menu -->
-<section id="menu">
-    <div class="container-sm bg-primary">
-        <div class="row">
-            <div class="col text-end p-2">
-                <select name="country">
-                    <option value="NL">Netherland</option>
-                    <option value="BE">Belgium</option>
-                    <option value="LUX">Luxembourg</option>
-                </select>
-            </div> 
-         </div>
+<nav class="navbar navbar-light bg-dark">
+    <div class="container-sm">
+        <a href="#" class="navbar-brand">
+            <span class="text-light">
+                <img src="{{ url_for('static', filename = 'images/letterboxd.svg') }}" class="image-fluid" alt="Letterboxd" height="30" />
+                Streaming Searcher
+             </span>
+        </a>
+
+        <span class="text-end p-2">
+            <select name="country" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                {% for countryCode, countryName in countries.items() %}
+                    <option value="{{ countryCode }}">{{ countryName.title() }}</option>
+                {% endfor %}
+            </select>
+        </span>
     </div>
-</section>
+</nav>
 
 
 <!-- Form -->
