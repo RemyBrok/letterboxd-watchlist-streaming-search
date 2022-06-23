@@ -9,7 +9,7 @@ class MainController:
         self.MovieDatabase = TMDB()
         self.storage = []
 
-    def yieldFilms(self, url, recursive = False):
+    def yieldFilms(self, url, country, recursive = False):
         """Yield films with their providers"""
         # Get first request
         response = curl.get(url)
@@ -24,7 +24,7 @@ class MainController:
                 film = self.MovieDatabase.getMovie(film[6:-1].replace('-', ' '))
 
                 if film:
-                    providers = self.MovieDatabase.getWatchProviders(film)
+                    providers = self.MovieDatabase.getWatchProviders(film, country)
                     if providers:
                         self.storage.append({
                             'name': film['original_title'],
@@ -38,7 +38,13 @@ class MainController:
             totalPages = int(pagination.find_all('li')[-1].get_text())
 
             for i in range(2, totalPages):
-                self.storage.append(self.yieldFilms(url = f"{url}/page/{i}", recursive = True))
+                self.storage.append(
+                    self.yieldFilms(
+                        url = f"{url}/page/{i}", 
+                        country = country, 
+                        recursive = True
+                    )
+                )
 
         return self.storage
 

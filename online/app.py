@@ -29,7 +29,7 @@ def process():
        and request.form['URL'][0:18] != 'www.letterboxd.com/'):
         return render_template('index.html')
 
-    return render_template('index.html', movies=MainController().yieldFilms(request.form['URL']))
+    return render_template('index.html', movies=MainController().yieldFilms(request.form['URL'], request.form['country']))
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=80)

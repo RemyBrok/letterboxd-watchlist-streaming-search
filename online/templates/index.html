@@ -12,11 +12,14 @@
         </a>
 
         <span class="text-end p-2">
+
+            <form method="POST" action="{{ url_for('process') }}"" autocomplete="off">
             <select name="country" class="form-select form-select-sm" aria-label=".form-select-sm example">
                 {% for countryCode, countryName in countries.items() %}
                     <option value="{{ countryCode }}">{{ countryName.title() }}</option>
                 {% endfor %}
             </select>
+            
         </span>
     </div>
 </nav>
@@ -30,9 +33,9 @@
                 <p>
                     Your letterboxd account:
                 </p>
-                <form method="POST" action="{{ url_for('process') }}"" autocomplete="off">
-                    <input type="text" name="URL" value="https://letterboxd.com/Holymoose/watchlist/">
-                    <input type="submit" value="GO" />
+
+                <input type="text" name="URL" value="https://letterboxd.com/Holymoose/watchlist/">
+                <input type="submit" value="GO" />
                 </form>
             </div>
         </div>
