@@ -6,7 +6,7 @@ from datetime import date
 class TMDB:
     def __init__(self):
         self.today = date.today()
-        pass
+        self.baseURL = "https://api.themoviedb.org/3/"
     
     def getMovie(self, movie: str) -> dict:
         """Retrieves the right movie from The Movie Database"""
@@ -22,7 +22,7 @@ class TMDB:
         filmURL = urllib.parse.quote_plus(movie)
 
         # Search the movie 
-        url = f"https://api.themoviedb.org/3/search/movie?api_key={config.TheMovieDatabase['apikey']}&query={filmURL}"
+        url = f"{self.baseURL}search/movie?api_key={config.TheMovieDatabase['apikey']}&query={filmURL}"
 
         # Search with TMDB
         response = curl.get(url)
@@ -48,7 +48,7 @@ class TMDB:
         "Get watch providers. Provided by JustWatch.com"
         
         # Send request to MovieDatabase
-        response = curl.get(f"https://api.themoviedb.org/3/movie/{movie['id']}/watch/providers?api_key={config.TheMovieDatabase['apikey']}")
+        response = curl.get(f"{self.baseURL}movie/{movie['id']}/watch/providers?api_key={config.TheMovieDatabase['apikey']}")
 
         # Retrieve results
         results = response.json().get('results')
@@ -61,6 +61,16 @@ class TMDB:
 
         return None
 
+    def getProviders(country: str) -> dict :
+        "Get all the providers available in a country"
+
+        response = curl.get(f"https://api.themoviedb.org/3/watch/providers/tv?api_key={config.TheMovieDatabase['apikey']}&watch_region={country}")
+
+        results = response.json().get('results')
+
+        # Sometimes we get multiple watch provider names so we're gonna make it unique
+        return list({v['provider_name']:v for v in results}.values())
+
     def validYear(self, year) -> bool:
         """Checks if its a valid year"""
         try:
@@ -70,3 +80,6 @@ class TMDB:
                 return False
         except:
             return False
+
+if __name__ == "__main__":
+    TMDB.getProviders('NL')

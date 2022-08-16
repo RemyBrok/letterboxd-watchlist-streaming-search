@@ -2,6 +2,8 @@ from flask import Flask, render_template, request
 
 from Controllers import MainController
 import json
+from config import DefaultCountry
+from MovieDatabase import TMDB
 
 app = Flask(__name__)
 app.config.update(
@@ -11,8 +13,8 @@ app.config.update(
 
 @app.context_processor
 def availableCountries():
-    with open('data/countries.json', 'r') as file:        
-        return dict(countries=json.load(file))
+    with open('data/countries.json', 'r') as file:
+        return dict(countries=json.load(file), DefaultCountry=DefaultCountry, providers=TMDB.getProviders(DefaultCountry))
 
 @app.route('/', methods=['GET'])
 def home():
