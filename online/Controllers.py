@@ -9,7 +9,7 @@ class MainController:
         self.MovieDatabase = TMDB()
         self.storage = []
 
-    def yieldFilms(self, url, country, recursive = False):
+    def yieldFilms(self, url, country, selectedProviders, recursive = False):
         """Yield films with their providers"""
         # Get first request
         response = curl.get(url)
@@ -25,6 +25,8 @@ class MainController:
 
                 if film:
                     providers = self.MovieDatabase.getWatchProviders(film, country)
+                    providers = self.sanatizeProviders(providers, selectedProviders)
+
                     if providers:
                         self.storage.append({
                             'name': film['original_title'],
@@ -41,13 +43,18 @@ class MainController:
                 self.storage.append(
                     self.yieldFilms(
                         url = f"{url}/page/{i}", 
-                        country = country, 
+                        country = country,
+                        selectedProviders = selectedProviders,
                         recursive = True
                     )
                 )
 
         return self.storage
 
-if __name__ == "__main__":
-    main = MainController()
-    main.yieldFilms('https://letterboxd.com/Holymoose/watchlist/')
+    def sanatizeProviders(self, providers, selectedProviders):
+        if not providers:
+            return False
+
+        providers[:] = [item for item in providers if item['provider_name'] in selectedProviders]
+
+        return providers

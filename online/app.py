@@ -21,17 +21,24 @@ def home():
     return render_template('index.html')
 
 @app.route('/', methods=['POST'])
-def process():
+def process():    
     # If there is nothing filled in
     if not request.form['URL']:
         return render_template('index.html')
+    if not request.form.getlist('selectedProviders'):
+        return render_template('index.html', message="No providers selected")
     # If the url does not match letterboxd
     if(request.form['URL'][0:23] != 'https://letterboxd.com/' 
        and request.form['URL'][0:26] != 'https://www.letterboxd.com/'
        and request.form['URL'][0:18] != 'www.letterboxd.com/'):
         return render_template('index.html')
 
-    return render_template('index.html', movies=MainController().yieldFilms(request.form['URL'], request.form['country']))
+    return render_template('index.html', movies = MainController().yieldFilms(
+            url = request.form['URL'], 
+            country = request.form['country'], 
+            selectedProviders = request.form.getlist('selectedProviders'),
+        )
+    )
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=80)
