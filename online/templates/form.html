@@ -1,0 +1,33 @@
+<div class="form-group">
+    <div class="row justify-content-md-center pt-2">
+        <div class="col-sm-4">
+            <div class="input-group mb-3">
+                <input type="text" name="URL" class="form-control bg-light" placeholder="Your Letterboxd account" aria-label="Your Letterboxd account" aria-describedby="button-addon2">
+                <button class="btn btn-light" type="submit" id="button-addon2">Search</button>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-md-center pt-2">
+        <div class="col">
+            {{ message}}
+        </div>
+    </div>
+
+    <div class="row justify-content-md-center pt-2">
+        <div class="col">
+            <p>
+                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                  Show providers
+                </a>
+            </p>
+            <div class="collapse" id="collapseExample">
+                {% for provider in providers %}
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="selectedProviders" id="provider-{{ provider.provider_id }}" value="{{ provider.provider_name }}">
+                        <label class="form-check-label" for="provider-{{ provider.provider_id }}">{{ provider.provider_name }}</label>
+                    </div>
+                {% endfor %}
+              </div>
+        </div>
+    </div>
+</div>

@@ -4,7 +4,7 @@
 <!-- Country selector and menu -->
 <nav class="navbar navbar-light bg-dark">
     <div class="container-sm">
-        <a href="#" class="navbar-brand">
+        <a href="{{ url_for(request.endpoint) }}" class="navbar-brand">
             <span class="text-light">
                 <img src="{{ url_for('static', filename = 'images/letterboxd.svg') }}" class="image-fluid" alt="Letterboxd" height="30" />
                 Streaming Searcher
@@ -24,30 +24,14 @@
     </div>
 </nav>
 
-
 <!-- Form -->
 <section id="form">
     <div class="container-sm bg-secondary">
         <div class="row">
-            <div class="col p-2 text-center">
-                <p>
-                    Your letterboxd account:
-                </p>
+            <div class="col p-2 text-center border-start border-end border-dark">
 
-                <span>
-                    {{ message }}
-                </span>
+                {% include 'form.html' %}
 
-                <input type="text" name="URL" value="https://letterboxd.com/Holymoose/watchlist/"><br /><br />
-
-                {% for provider in providers %}
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="selectedProviders" id="provider-{{ provider.provider_id }}" value="{{ provider.provider_name }}">
-                        <label class="form-check-label" for="provider-{{ provider.provider_id }}">{{ provider.provider_name }}</label>
-                    </div>
-                {% endfor %}
-
-                <input type="submit" value="GO" />
                 </form>
             </div>
         </div>

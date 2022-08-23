@@ -24,14 +24,14 @@ def home():
 def process():    
     # If there is nothing filled in
     if not request.form['URL']:
-        return render_template('index.html')
+        return render_template('index.html', message="Nothing filled in")
     if not request.form.getlist('selectedProviders'):
         return render_template('index.html', message="No providers selected")
     # If the url does not match letterboxd
     if(request.form['URL'][0:23] != 'https://letterboxd.com/' 
        and request.form['URL'][0:26] != 'https://www.letterboxd.com/'
        and request.form['URL'][0:18] != 'www.letterboxd.com/'):
-        return render_template('index.html')
+        return render_template('index.html', message = "Invalid input")
 
     return render_template('index.html', movies = MainController().yieldFilms(
             url = request.form['URL'], 
